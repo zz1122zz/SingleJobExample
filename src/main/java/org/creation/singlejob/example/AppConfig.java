@@ -1,7 +1,12 @@
 package org.creation.singlejob.example;
 
 
-import org.creation.singlejob.example.ctrl.ExampleController;
+import org.creation.singlejob.EnableSingleJob;
+import org.creation.singlejob.key.SpELSingleJobKeyGenerator;
+import org.creation.singlejob.persistence.RedisSingleJobDataPersistenceProvider;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +16,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @Import(value = {})
-@ComponentScan(basePackages = {})
+@ComponentScan(basePackages = {"org.creation.singlejob.example"})
 //@PropertySource(value = {"classpath:application.properties"})
 // cgLib 可以不用接口，它底层调用asm 动态生成一个代理类去覆盖父类中非 final 的方法，然后实现 MethodInterceptor 接口的
 // intercept 方法，这样以后直接调用重写的方法，比 JDK 要快。但是加载 cglib 消耗时间比直接 JDK
@@ -20,7 +25,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 //@EnableAsync
 //@EnableScheduling
 //@EnableCaching
-//@EnableSingleJob
+@EnableSingleJob
 public class AppConfig {
 
     //private final Logger logger = LoggerFactory.getLogger(AppConfig.class);
@@ -30,27 +35,26 @@ public class AppConfig {
         return new PropertySourcesPlaceholderConfigurer();
     }
     
+//    @Bean
+//    public ExampleController exampleController()
+//    {
+//        return new ExampleController();
+//    }
+
     @Bean
-    public ExampleController exampleController()
-    {
-        return new ExampleController();
+    public RedisSingleJobDataPersistenceProvider redisSingleJobDataPersistenceProvider() {
+        Config config = new Config();
+        config.useMasterSlaveServers().setMasterAddress("redis://cl-dev-all-redis26-task4service-kvx54vrf.docker.sdp:7019").setConnectTimeout(5000);
+        RedissonClient redisson = Redisson.create(config);
+        RedisSingleJobDataPersistenceProvider redisSingleJobDataPersistenceProvider = new RedisSingleJobDataPersistenceProvider();
+        redisSingleJobDataPersistenceProvider.setRedissonClient(redisson);
+        //redisSingleJobDataPersistenceProvider.setLeaseTime(10, TimeUnit.SECONDS);
+        return redisSingleJobDataPersistenceProvider;
     }
-    
-//    @Bean
-//    public RedisSingleJobDataPersistenceProvider redisSingleJobDataPersistenceProvider() {
-//        Config config = new Config();
-//        config.useMasterSlaveServers().setMasterAddress("redis://cl-dev-all-redis26-task4service-kvx54vrf.docker.sdp:7019").setConnectTimeout(5000);
-//        RedissonClient redisson = Redisson.create(config);
-//        RedisSingleJobDataPersistenceProvider redisSingleJobDataPersistenceProvider = new RedisSingleJobDataPersistenceProvider();
-//        redisSingleJobDataPersistenceProvider.setRedissonClient(redisson);
-//        redisSingleJobDataPersistenceProvider.setLeaseTime(10, TimeUnit.SECONDS);
-//        return redisSingleJobDataPersistenceProvider;
-//    }
-    
-//    @Bean
-//    public SpELSingleJobKeyGenerator spELSingleJobKeyGenerator() {
-//        return SpELSingleJobKeyGenerator.getInstance();
-//    }
+    @Bean
+    public SpELSingleJobKeyGenerator spELSingleJobKeyGenerator() {
+        return SpELSingleJobKeyGenerator.getInstance();
+    }
 
 //    @Bean
 //    public TaskScheduler getTaskScheduler() {
