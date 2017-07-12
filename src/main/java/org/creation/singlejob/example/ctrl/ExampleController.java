@@ -39,6 +39,12 @@ public class ExampleController {
     public Object lockInRedis(@RequestBody JSONObject object, String uid) {
         return singleJobExampleService.lockInRedis(uid, object);
     }
+    
+    @RequestMapping(value = "/lockInRedisWithCache", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public Object lockInRedisWithCache(@RequestBody JSONObject object, String uid) {
+        return singleJobExampleService.lockInRedisWithCache(uid, object);
+    }
 
     @RequestMapping(value = "/lockInRedisReenterable", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
@@ -50,5 +56,10 @@ public class ExampleController {
     @ResponseBody
     public Object lockInMemoryReenterable(@RequestBody JSONObject object, String uid) {
         return singleJobExampleService.lockInMemoryReenterable(uid, object, 3);
+    }
+    @RequestMapping(value = "/lockInRedisWithCustomLockName", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public Object lockInRedisWithCustomLockName(@RequestBody JSONObject object, String uid) {
+        return singleJobExampleService.lockInRedisWithCustomLockName(uid, object);
     }
 }
