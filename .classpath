@@ -23,5 +23,9 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
+=======
+	<classpathentry combineaccessrules="false" kind="src" path="/SingleJob"/>
+>>>>>>> 5b3fcb6bb4e36c9c09b3b5ab3d56842f85cd1db4
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

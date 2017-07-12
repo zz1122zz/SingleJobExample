@@ -13,6 +13,10 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.2.9.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.2.9.RELEASE" />
+<<<<<<< HEAD
+=======
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.2.9.RELEASE" />
+>>>>>>> 5b3fcb6bb4e36c9c09b3b5ab3d56842f85cd1db4
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.2.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.2.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.2.9.RELEASE" />
@@ -42,8 +46,13 @@
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-jcl:2.8.2" />
           <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.8.2" />
           <element id="library" level="project" name="Maven: org.slf4j:jul-to-slf4j:1.7.12" />
+<<<<<<< HEAD
           <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.9" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.2.9.RELEASE" />
+=======
+          <element id="library" level="project" name="Maven: com.nd.component.java:singlejob:1.0-SNAPSHOT" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.9" />
+>>>>>>> 5b3fcb6bb4e36c9c09b3b5ab3d56842f85cd1db4
           <element id="library" level="project" name="Maven: org.redisson:redisson:2.9.3" />
           <element id="library" level="project" name="Maven: io.netty:netty-common:4.1.11.Final" />
           <element id="library" level="project" name="Maven: io.netty:netty-codec:4.1.11.Final" />

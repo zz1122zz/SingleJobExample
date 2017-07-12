@@ -24,7 +24,11 @@ import com.alibaba.fastjson.JSONObject;
 @Service
 public class SingleJobExampleService {
 
+<<<<<<< HEAD
     @SingleJob(distinction = "#uid+#object.getString(\"key\")")
+=======
+    @SingleJob(distinction = "#uid")
+>>>>>>> 5b3fcb6bb4e36c9c09b3b5ab3d56842f85cd1db4
     public String lockInMemory(String uid,JSONObject object)
     {
         return null;

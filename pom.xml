@@ -21,6 +21,7 @@
 
     <dependencies>
     
+<<<<<<< HEAD
   	<dependency>
              <groupId>org.creation.singlejob</groupId>
             <artifactId>SingleJob</artifactId>
@@ -28,6 +29,8 @@
             <scope>system</scope>
             <systemPath>C:/Users/Administrator/git/SingleJob/target/SingleJob-0.0.1-SNAPSHOT.jar</systemPath>
         </dependency>
+=======
+>>>>>>> 5b3fcb6bb4e36c9c09b3b5ab3d56842f85cd1db4
         <dependency>
         	<groupId>javax.servlet</groupId>
         	<artifactId>javax.servlet-api</artifactId>
@@ -168,6 +171,16 @@
   		<artifactId>guava</artifactId>
   		<version>19.0</version>
   	</dependency>
+<<<<<<< HEAD
+=======
+  	<dependency>
+             <groupId>com.nd.component.java</groupId>
+            <artifactId>singlejob</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>C:\Users\Administrator\git\SingleJobExample\src\main\webapp\WEB-INF\lib\SingleJob-0.0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
+>>>>>>> 5b3fcb6bb4e36c9c09b3b5ab3d56842f85cd1db4
 <!--     <dependency> -->
 <!--             <groupId>com.nd.component.java</groupId> -->
 <!--             <artifactId>singlejob</artifactId> -->
