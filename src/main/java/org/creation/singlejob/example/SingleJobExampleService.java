@@ -3,6 +3,7 @@ import javax.annotation.Resource;
 
 import org.creation.singlejob.SingleJob;
 import org.creation.singlejob.SingleJobPolicy;
+import org.creation.singlejob.SingleJobType;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +38,22 @@ public class SingleJobExampleService {
      * @param object
      * @return
      */
-    @SingleJob(distinction = "#uid+#object.getString(\"key\")", singleJobPolicy= SingleJobPolicy.WAIT_IN_QUENE_TO_PROCEED)
+    @SingleJob(distinction = "#uid+#object.getString(\"key\")", singleJobDataPersistenceProvider = "redisSingleJobDataPersistenceProvider", singleJobPolicy= SingleJobPolicy.WAIT_IN_QUENE_TO_PROCEED)
     public String lockInRedis(String uid,JSONObject object)
+    {
+        return "cache at:"+new DateTime().toString("MMdd HH:mm:SS");
+    }
+    
+    /** 
+     * <p>Description:  展示redis锁  </p>
+     * <p>Create Time: 2017年7月11日   </p>
+     * <p>Create author: LiuPeng   </p>
+     * @param uid
+     * @param object
+     * @return
+     */
+    @SingleJob(distinction = "#uid+#object.getString(\"key\")",readCacheIfExist = true, singleJobDataPersistenceProvider = "redisSingleJobDataPersistenceProvider" ,singleJobPolicy= SingleJobPolicy.WAIT_IN_QUENE_TO_PROCEED)
+    public String lockInRedisWithCache(String uid,JSONObject object)
     {
         return "cache at:"+new DateTime().toString("MMdd HH:mm:SS");
     }
@@ -85,5 +100,19 @@ public class SingleJobExampleService {
         {
             return "cache at:"+new DateTime().toString("MMdd HH:mm:SS");
         }
+    }
+    
+    /** 
+     * <p>Description:  展示自定义业务锁  </p>
+     * <p>Create Time: 2017年7月11日   </p>
+     * <p>Create author: LiuPeng   </p>
+     * @param uid
+     * @param object
+     * @return
+     */
+    @SingleJob(distinction = "#uid+#object.getString(\"key\")",type = SingleJobType.LOCK_BY_CUSTOM_LOCKNAME, lockName = "MyCustomName", singleJobDataPersistenceProvider = "redisSingleJobDataPersistenceProvider", singleJobPolicy= SingleJobPolicy.WAIT_IN_QUENE_TO_PROCEED)
+    public String lockInRedisWithCustomLockName(String uid,JSONObject object)
+    {
+        return "cache at:"+new DateTime().toString("MMdd HH:mm:SS");
     }
 }
