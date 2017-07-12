@@ -1,8 +1,12 @@
 package org.creation.singlejob.example.config;
 
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooKeeper;
 import org.creation.singlejob.EnableSingleJob;
 import org.creation.singlejob.key.SpELSingleJobKeyGenerator;
 import org.creation.singlejob.persistence.LocalMemoryDataPersistenceProvider;
@@ -63,7 +67,27 @@ public class AppConfig {
     public SpELSingleJobKeyGenerator spELSingleJobKeyGenerator() {
         return SpELSingleJobKeyGenerator.getInstance();
     }
+    
+    @Bean
+    public Watcher simpleWatcher() {
+        return new Watcher(){
 
+            @Override
+            public void process(WatchedEvent event) {
+                System.out.println("测试 我不知道要做什么！");
+            }
+            
+        };
+    }
+    
+    @Bean
+    public ZooKeeper zooKeeper(Watcher simpleWatcher) {
+        try {
+            return new ZooKeeper("127.0.0.1", 2000, simpleWatcher);
+        } catch (IOException e) {
+            return null;
+        }
+    }
 //    @Bean
 //    public TaskScheduler getTaskScheduler() {
 //        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
