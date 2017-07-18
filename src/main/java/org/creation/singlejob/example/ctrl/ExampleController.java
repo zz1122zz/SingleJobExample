@@ -52,14 +52,33 @@ public class ExampleController {
         return singleJobExampleService.lockInRedisReenterable(uid, object, 3);
     }
     
+    @RequestMapping(value = "/lockInRedisWithCustomLockName", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public Object lockInRedisWithCustomLockName(@RequestBody JSONObject object, String uid) {
+        return singleJobExampleService.lockInRedisWithCustomLockName(uid, object);
+    }
+    
     @RequestMapping(value = "/lockInMemoryReenterable", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public Object lockInMemoryReenterable(@RequestBody JSONObject object, String uid) {
         return singleJobExampleService.lockInMemoryReenterable(uid, object, 3);
     }
-    @RequestMapping(value = "/lockInRedisWithCustomLockName", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+    
+    @RequestMapping(value = "/lockInZooKeeper", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
-    public Object lockInRedisWithCustomLockName(@RequestBody JSONObject object, String uid) {
-        return singleJobExampleService.lockInRedisWithCustomLockName(uid, object);
+    public Object lockInZooKeeper(@RequestBody JSONObject object, String uid) {
+        return singleJobExampleService.lockInZooKeeper(uid, object);
+    }
+
+    @RequestMapping(value = "/lockInZooKeeperWithCache", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public Object lockInZooKeeperWithCache(@RequestBody JSONObject object, String uid) {
+        return singleJobExampleService.lockInZooKeeperWithCache(uid, object);
+    }
+
+    @RequestMapping(value = "/lockInZooKeeperReenterable", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public Object lockInZooKeeperReenterable(@RequestBody JSONObject object, String uid) {
+        return singleJobExampleService.lockInZooKeeperReenterable(uid, object, 3);
     }
 }
