@@ -1,16 +1,16 @@
 package org.creation.singlejob.example.config;
 
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.ZooKeeper;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.retry.RetryNTimes;
 import org.creation.singlejob.EnableSingleJob;
 import org.creation.singlejob.key.SpELSingleJobKeyGenerator;
 import org.creation.singlejob.persistence.LocalMemoryDataPersistenceProvider;
 import org.creation.singlejob.persistence.RedisSingleJobDataPersistenceProvider;
+import org.creation.singlejob.persistence.ZooKeeperSingleJobDataPersistenceProvider;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -52,7 +52,16 @@ public class AppConfig {
 //    {
 //        return new ExampleController();
 //    }
-    
+    private static final int TIME_OUT = 3000000;
+    private static final String HOST = "localhost:2181";
+    @Bean
+    public ZooKeeperSingleJobDataPersistenceProvider zooKeeperSingleJobDataPersistenceProvider() {
+        ZooKeeperSingleJobDataPersistenceProvider zooKeeperSingleJobDataPersistenceProvider = new ZooKeeperSingleJobDataPersistenceProvider();
+        CuratorFramework zooKeeperClient =CuratorFrameworkFactory.newClient(HOST, TIME_OUT, TIME_OUT, new RetryNTimes(3,30));
+        zooKeeperClient.start();
+        zooKeeperSingleJobDataPersistenceProvider.setZooKeeperClient(zooKeeperClient);
+        return zooKeeperSingleJobDataPersistenceProvider;
+    }
     @Bean
     public RedisSingleJobDataPersistenceProvider redisSingleJobDataPersistenceProvider() {
         Config config = new Config();
@@ -66,27 +75,6 @@ public class AppConfig {
     @Bean
     public SpELSingleJobKeyGenerator spELSingleJobKeyGenerator() {
         return SpELSingleJobKeyGenerator.getInstance();
-    }
-    
-    @Bean
-    public Watcher simpleWatcher() {
-        return new Watcher(){
-
-            @Override
-            public void process(WatchedEvent event) {
-                System.out.println("测试 我不知道要做什么！");
-            }
-            
-        };
-    }
-    
-    @Bean
-    public ZooKeeper zooKeeper(Watcher simpleWatcher) {
-        try {
-            return new ZooKeeper("127.0.0.1", 2000, simpleWatcher);
-        } catch (IOException e) {
-            return null;
-        }
     }
 //    @Bean
 //    public TaskScheduler getTaskScheduler() {

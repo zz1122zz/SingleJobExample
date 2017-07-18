@@ -40,6 +40,12 @@ public class ExampleController {
         return singleJobExampleService.lockInRedis(uid, object);
     }
     
+    @RequestMapping(value = "/lockInZooKeeper", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
+    @ResponseBody
+    public Object lockInZooKeeper(@RequestBody JSONObject object, String uid) {
+        return singleJobExampleService.lockInZooKeeper(uid, object);
+    }
+    
     @RequestMapping(value = "/lockInRedisWithCache", method = RequestMethod.POST, produces = { "application/json;charset=UTF-8" })
     @ResponseBody
     public Object lockInRedisWithCache(@RequestBody JSONObject object, String uid) {
