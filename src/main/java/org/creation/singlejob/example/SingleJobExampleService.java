@@ -61,18 +61,17 @@ public class SingleJobExampleService {
         return "cache at:" + new DateTime().toString("MMdd HH:mm:SS");
     }
 
-    /**
-     * <p>Description:      展示ZooKeeper锁的可重入性        </p>
-     * <p>Create Time: 2017年7月11日   </p>
+    /** 
+     * <p>Description:              </p>
+     * <p>Create Time: 2017年7月24日   </p>
      * <p>Create author: LiuPeng   </p>
-     *
      * @param uid
      * @param object
-     * @param reenter
+     * @param i
      * @return
      */
     @SingleJob(distinction = "#uid+#object.getString(\"key\")", singleJobDataPersistenceProvider = "zooKeeperSingleJobDataPersistenceProvider", singleJobPolicy = SingleJobPolicy.WAIT_IN_QUENE_TO_PROCEED)
-    public String lockInZooKeeperReenterable(String uid, JSONObject object, int reenter) {
+     public Object lockInZooKeeperReenterable(String uid, JSONObject object, int reenter) {
         if (reenter > 0) {
             //SingleJobExampleService aop = (SingleJobExampleService) AopContext.currentProxy();
             //return aop.lockInRedisReenterable(uid, object,reenter-1);
@@ -81,6 +80,7 @@ public class SingleJobExampleService {
             return "cache at:" + new DateTime().toString("MMdd HH:mm:SS");
         }
     }
+    
     /**
      * <p>Description:  展示redis锁  </p>
      * <p>Create Time: 2017年7月11日   </p>
